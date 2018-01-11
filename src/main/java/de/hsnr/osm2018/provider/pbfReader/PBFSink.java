@@ -22,17 +22,12 @@ public class PBFSink implements Sink {
     private Map<Long, Node> nodes;
     private List<Edge> ways;
 
-    private long nc;
-    private long wc;
-
     private org.openstreetmap.osmosis.core.domain.v0_6.Node currentOsmNode;
     private Way currentWay;
 
     public PBFSink() {
         this.nodes = new HashMap();
         this.ways = new ArrayList<>();
-        nc = 0l;
-        wc = 0l;
     }
 
     @Override
@@ -40,11 +35,9 @@ public class PBFSink implements Sink {
         if(entityContainer instanceof NodeContainer) {
             this.currentOsmNode = ((NodeContainer) entityContainer).getEntity();
             this.processCurrentNode();
-            System.out.println(++nc);
         } else if(entityContainer instanceof WayContainer) {
             this.currentWay = ((WayContainer) entityContainer).getEntity();
             this.processCurrentWay();
-            System.out.println(++wc);
         }
     }
 

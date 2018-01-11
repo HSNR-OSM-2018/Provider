@@ -16,8 +16,6 @@ public class PBFReaderTest {
         reader.run();
         long t2 = System.currentTimeMillis();
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
-        System.gc();
-        System.out.println("Finished");
     }
 
     @Test
@@ -31,7 +29,6 @@ public class PBFReaderTest {
         long t2 = System.currentTimeMillis();
         System.out.println("After: " + reader.getSink().getNodes().size());
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
-        System.in.read();
     }
 
 
@@ -45,6 +42,5 @@ public class PBFReaderTest {
         long t2 = System.currentTimeMillis();
         System.out.println("After: " + reader.getSink().getNodes().size());
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
-        System.in.read();
     }
 }

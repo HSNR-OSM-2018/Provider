@@ -12,6 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -25,12 +26,16 @@
             </configuration>
         </plugin>
     </plugins>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>RELEASE</version>
         </dependency>
+
+        <!--Put New Dependencies here-->
+
         <dependency>
             <groupId>org.openstreetmap.osmosis</groupId>
             <artifactId>osmosis-core</artifactId>

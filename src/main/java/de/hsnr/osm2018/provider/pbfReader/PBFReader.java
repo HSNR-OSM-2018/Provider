@@ -15,7 +15,7 @@ public class PBFReader {
     private PBFSink sink;
 
     public PBFReader(String filename) {
-        File pbfFile = null;
+        File pbfFile;
         FileInputStream pbfFileStream = null;
         try {
             pbfFile = new File(this.getClass().getClassLoader().getResource(filename).getFile());
