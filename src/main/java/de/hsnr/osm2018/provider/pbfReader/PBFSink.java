@@ -26,7 +26,7 @@ public class PBFSink implements Sink {
     private Way currentWay;
 
     public PBFSink() {
-        this.nodes = new HashMap();
+        this.nodes = new HashMap<>();
         this.ways = new ArrayList<>();
     }
 
@@ -52,7 +52,7 @@ public class PBFSink implements Sink {
             Node startNode = this.nodes.get(wayNodes.get(0).getNodeId());
             Node endNode = this.nodes.get(wayNodes.get(wayNodes.size() - 1).getNodeId());
             Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") || tag.getKey().equals("length") || tag.getKey().equals("highway")).collect(Collectors.toMap(t -> t.getKey(), t->t));
-            Edge currentWay = new Edge(startNode, endNode, tags.containsKey("length") ? this.evaluateLength(tags.get("length")) : null, tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : null, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
+            Edge currentWay = new Edge(startNode, endNode.getId(), tags.containsKey("length") ? this.evaluateLength(tags.get("length")) : null, tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : null, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
             this.ways.add(currentWay);
         }
     }
@@ -91,7 +91,7 @@ public class PBFSink implements Sink {
         for(WayNode wayNode : wayNodes) {
             Node currentNode = this.nodes.get(wayNode.getNodeId());
             Double currentLat = currentNode.getLatitude();
-            Double currentLon = currentNode.getLongitute();
+            Double currentLon = currentNode.getLongitude();
             if(lastLat != null && lastLon != null) {
                 double dx = 111.3 * currentLat;
                 double dy = 71.5 * currentLon;
