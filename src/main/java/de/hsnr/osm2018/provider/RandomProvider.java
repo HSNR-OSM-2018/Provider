@@ -2,7 +2,6 @@ package de.hsnr.osm2018.provider;
 
 import de.hsnr.osm2018.data.data.FilteredDataProvider;
 import de.hsnr.osm2018.data.graph.EdgeType;
-import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.data.graph.Node;
 
 import java.util.Random;
@@ -19,7 +18,7 @@ public class RandomProvider extends FilteredDataProvider {
     }
 
     public RandomProvider(int nodeSize, int halfDensity) {
-        this.mGraph = new Graph();
+        super();
         double minLatitude = Math.min(mTop, mBottom);
         double rangeLatitude = Math.max(mTop, mBottom) - minLatitude;
         double minLongitude = Math.min(mLeft, mRight);
@@ -35,8 +34,8 @@ public class RandomProvider extends FilteredDataProvider {
                 do {
                     dest = (long) random.nextInt(nodeSize);
                 } while (dest.intValue() == start);
-                int length = 10 * random.nextInt(5000);
-                short speed = (short) (10 * random.nextInt(13));
+                int length = 10 * (random.nextInt(490) + 10);
+                short speed = (short) (10 * (random.nextInt(11) + 2));
                 double typeRand = random.nextDouble();
                 EdgeType type;
                 if (typeRand < 0.1D) {
