@@ -12,9 +12,9 @@ public class PBFReader {
     private static final Logger LOGGER = Logger.getLogger(PBFReader.class.getSimpleName());
 
     private OsmosisReader osmosisReader;
-    private PBFSink sink;
+    private MySink sink;
 
-    public PBFReader(String filename) {
+    public PBFReader(String filename, MySink sink) {
         File pbfFile;
         FileInputStream pbfFileStream = null;
         try {
@@ -26,7 +26,7 @@ public class PBFReader {
             LOGGER.severe(e.getMessage());
         }
         this.osmosisReader = new OsmosisReader(pbfFileStream);
-        sink = new PBFSink();
+        this.sink = sink;
         this.osmosisReader.setSink(sink);
     }
 
@@ -34,7 +34,7 @@ public class PBFReader {
         this.osmosisReader.run();
     }
 
-    public PBFSink getSink() {
+    public MySink getSink() {
         return this.sink;
     }
 
