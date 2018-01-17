@@ -2,6 +2,7 @@ package de.hsnr.osm2018.provider.pbfReader;
 
 import de.hsnr.osm2018.data.graph.Edge;
 import de.hsnr.osm2018.data.graph.EdgeType;
+import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.data.graph.Node;
 import de.hsnr.osm2018.data.utils.EdgeTypeUtils;
 import de.hsnr.osm2018.data.utils.OSMMaxSpeedUtils;
@@ -25,7 +26,11 @@ public class PBFSink implements MySink {
     private Way currentWay;
 
     public PBFSink() {
-        this.nodes = new HashMap();
+        this.nodes = new HashMap<>();
+    }
+
+    public PBFSink(Graph graph) {
+        this.nodes = graph.getNodes();
     }
 
     @Override
