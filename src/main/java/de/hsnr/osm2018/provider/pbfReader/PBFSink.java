@@ -92,7 +92,7 @@ public class PBFSink implements MySink {
             Node currentNode = this.nodes.get(wayNode.getNodeId());
             if (currentNode != null) {
                 Double currentLat = currentNode.getLatitude();
-                Double currentLon = currentNode.getLongitute();
+                Double currentLon = currentNode.getLongitude();
                 if (lastLat != null && lastLon != null) {
                     double dx = 111.3 * currentLat;
                     double dy = 71.5 * currentLon;

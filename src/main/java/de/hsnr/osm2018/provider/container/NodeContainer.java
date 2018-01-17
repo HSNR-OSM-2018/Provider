@@ -21,7 +21,7 @@ public class NodeContainer implements Storeable {
         this(new Node(storeReader.readLong(), storeReader.readDouble(), storeReader.readDouble()));
         int edgeCount = storeReader.readInteger();
         for (int i = 0; i < edgeCount; i++) {
-            mNode.addEdge(new EdgeContainer(mNode, storeReader, storeClassRegister).getEdge());
+            //mNode.addEdge(new EdgeContainer(mNode, storeReader, storeClassRegister).getEdge());
         }
     }
 
