@@ -40,7 +40,7 @@ public class PBFSink implements MySink {
     }
 
     private void processCurrentNode() {
-        Node currentNode = new Node(this.currentOsmNode.getId(), this.currentOsmNode.getLatitude(), this.currentOsmNode.getLongitude(), new ArrayList<>());
+        Node currentNode = new Node(this.currentOsmNode.getId(), this.currentOsmNode.getLatitude(), this.currentOsmNode.getLongitude());
         this.nodes.put(currentNode.getId(), currentNode);
     }
 

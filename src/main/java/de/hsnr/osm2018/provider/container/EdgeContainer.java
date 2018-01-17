@@ -26,7 +26,7 @@ public class EdgeContainer implements Storeable {
 
     @Override
     public void store(StoreWriter storeWriter, StoreClassRegister storeClassRegister) {
-        storeWriter.writeLong(mEdge.getDestinationNodeId());
+        storeWriter.writeLong(mEdge.getDestinationNode().getId());
         storeWriter.writeInteger(mEdge.getLength());
         storeWriter.writeInteger(mEdge.getSpeed());
         storeWriter.writeString(mEdge.getType().getName());
