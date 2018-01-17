@@ -1,6 +1,7 @@
 package de.hsnr.osm2018.provider.container;
 
 import de.hsnr.osm2018.data.graph.Edge;
+import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.data.graph.Node;
 import de.hsnr.osm2018.data.utils.EdgeTypeUtils;
 import org.openstreetmap.osmosis.core.store.StoreClassRegister;
@@ -16,8 +17,8 @@ public class EdgeContainer implements Storeable {
         this.mEdge = edge;
     }
 
-    public EdgeContainer(Node start, StoreReader storeReader, StoreClassRegister storeClassRegister) {
-        this(new Edge(start, storeReader.readLong(), storeReader.readInteger(), (short) storeReader.readInteger(), EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(storeReader.readString())));
+    public EdgeContainer(Graph graph, Node start, StoreReader storeReader, StoreClassRegister storeClassRegister) {
+        this(new Edge(start, graph.getNode(storeReader.readLong()), storeReader.readInteger(), (short) storeReader.readInteger(), EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(storeReader.readString())));
     }
 
     public Edge getEdge() {
