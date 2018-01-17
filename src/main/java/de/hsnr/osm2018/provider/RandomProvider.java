@@ -53,9 +53,9 @@ public class RandomProvider extends FilteredDataProvider {
                 } else {
                     type = EdgeType.RESIDENTIAL;
                 }
-                mGraph.getNode((long) start).addEdge(dest, length, speed, type);
+                mGraph.getNode((long) start).addEdge(mGraph.getNode(dest), length, speed, type);
                 if (random.nextDouble() < 0.9D) { //Create reverse route for 90% of "roads"
-                    mGraph.getNode(dest).addEdge((long) start, length, speed, type);
+                    mGraph.getNode(dest).addEdge(mGraph.getNode((long) start), length, speed, type);
                 }
             }
         }
