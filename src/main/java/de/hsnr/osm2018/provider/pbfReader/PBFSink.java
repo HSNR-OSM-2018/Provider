@@ -51,7 +51,7 @@ public class PBFSink implements MySink {
             Node endNode = this.nodes.get(wayNodes.get(wayNodes.size() - 1).getNodeId());
             if(startNode != null && endNode != null) {
                 Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") || tag.getKey().equals("length") || tag.getKey().equals("highway")).collect(Collectors.toMap(t -> t.getKey(), t -> t));
-                Edge currentWay = new Edge(startNode, endNode, tags.containsKey("length") ? this.evaluateLength(tags.get("length"), wayNodes) : this.evaluateLength(wayNodes), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : -1, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
+                Edge currentWay = new Edge(startNode, endNode.getId(), tags.containsKey("length") ? this.evaluateLength(tags.get("length"), wayNodes) : this.evaluateLength(wayNodes), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : -1, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
                 this.nodes.get(currentWay.getStartNode().getId()).addEdge(currentWay);
             }
         }
@@ -92,7 +92,7 @@ public class PBFSink implements MySink {
             Node currentNode = this.nodes.get(wayNode.getNodeId());
             if (currentNode != null) {
                 Double currentLat = currentNode.getLatitude();
-                Double currentLon = currentNode.getLongitute();
+                Double currentLon = currentNode.getLongitude();
                 if (lastLat != null && lastLon != null) {
                     double dx = 111.3 * currentLat;
                     double dy = 71.5 * currentLon;
