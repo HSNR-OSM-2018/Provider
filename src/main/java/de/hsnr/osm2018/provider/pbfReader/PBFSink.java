@@ -50,15 +50,27 @@ public class PBFSink implements MySink {
             Node startNode = this.nodes.get(wayNodes.get(0).getNodeId());
             Node endNode = this.nodes.get(wayNodes.get(wayNodes.size() - 1).getNodeId());
             if(startNode != null && endNode != null) {
-                Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") || tag.getKey().equals("length") || tag.getKey().equals("highway")).collect(Collectors.toMap(t -> t.getKey(), t -> t));
-                Edge currentWay = new Edge(startNode, endNode, tags.containsKey("length") ? this.evaluateLength(tags.get("length"), wayNodes) : this.evaluateLength(wayNodes), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : -1, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
-                this.nodes.get(currentWay.getStartNode().getId()).addEdge(currentWay);
+                Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") ||
+                        tag.getKey().equals("length") || tag.getKey().equals("highway") || tag.getKey().equals("oneway") || tag.getKey().equals("junction")).collect(Collectors.toMap(t -> t.getKey(), t -> t));
+                Edge currentEdge = new Edge(startNode, endNode, tags.containsKey("length") ? this.evaluateLength(tags.get("length"), wayNodes) : this.evaluateLength(wayNodes), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : 0, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
+                this.nodes.get(currentEdge.getStartNode().getId()).addEdge(currentEdge);
+                if(!tags.containsKey("oneway")) {
+                    this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+                } else if(!tags.get("oneway").getValue().equals("yes")) {
+                    this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+                }
+                /*Code intentionally left here.**/
+                /*if(!tags.containsKey("junction")) {
+                    this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+                } else if(!tags.get("junction").equals("roundabout")) {
+                    this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+                }*/
             }
         }
     }
 
-    private Short evaluateMaxSpeed(Tag maxSpeed) {
-        Short result = null;
+    private short evaluateMaxSpeed(Tag maxSpeed) {
+        short result = 0;
         if(maxSpeed != null) {
             try {
                 result = Short.parseShort(maxSpeed.getValue());

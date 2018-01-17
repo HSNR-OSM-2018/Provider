@@ -1,9 +1,6 @@
 package de.hsnr.osm2018.provider.pbfReader;
 
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class PBFReaderTest {
@@ -16,7 +13,6 @@ public class PBFReaderTest {
         reader.run();
         long t2 = System.currentTimeMillis();
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
-        Thread.sleep(5000);
     }
 
     @Test
