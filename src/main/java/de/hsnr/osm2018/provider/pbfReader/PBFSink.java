@@ -59,6 +59,10 @@ public class PBFSink implements MySink {
                 } else if(!tags.get("oneway").getValue().equals("yes")) {
                     this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
                 }
+                for(int i = 1; i < wayNodes.size() - 1; i++) {
+                    this.nodes.remove(wayNodes.get(i).getNodeId());
+                }
+
                 /*Code intentionally left here.**/
                 /*if(!tags.containsKey("junction")) {
                     this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
@@ -128,6 +132,17 @@ public class PBFSink implements MySink {
 
     @Override
     public void release() {
+        System.out.println("Start copy");
+        long ts1 = System.currentTimeMillis();
+        Map<Long, Node> copy = new HashMap<>(this.nodes);
+        long ts2 = System.currentTimeMillis();
+        System.out.println("Time taken for Copy: " + (ts2-ts1));
+        for(Map.Entry<Long, Node> node : copy.entrySet()) {
+            if(node.getValue().getEdges().size() == 0) {
+                this.nodes.remove(node.getKey());
+            }
+        }
+        copy = null;
         LOGGER.info("Finished.");
     }
 

@@ -13,6 +13,10 @@ public class PBFReaderTest {
         reader.run();
         long t2 = System.currentTimeMillis();
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
+        System.gc();
+        System.out.println(reader.getSink().getNodes().size() + "Nodes stored.");
+        reader.getSink().getNodes().forEach((i,n) -> System.out.println("Lat: " + n.getLatitude() + " / " + "Lon: " + n.getLongitude()));
+        Thread.sleep(5000);
     }
 
     @Test
