@@ -7,10 +7,10 @@ import java.io.*;
 
 public class SerializeProvider extends FilteredDataProvider {
 
-    public SerializeProvider(String fileName) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(this.getClass().getClassLoader().getResource(fileName).getFile())));
-        mGraph = (Graph) ois.readObject();
-        ois.close();
+    public SerializeProvider(String fileName) throws IOException {
+        DataInputStream dis = new DataInputStream(new FileInputStream(new File(this.getClass().getClassLoader().getResource(fileName).getFile())));
+        mGraph = new Graph(dis);
+        dis.close();
     }
 
     public SerializeProvider(Graph graph) {
@@ -18,8 +18,8 @@ public class SerializeProvider extends FilteredDataProvider {
     }
 
     public void save(String fileName) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
-        oos.writeObject(mGraph);
-        oos.close();
+        DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File(this.getClass().getClassLoader().getResource("").getFile(), fileName)));
+        mGraph.write(dos);
+        dos.close();
     }
 }
