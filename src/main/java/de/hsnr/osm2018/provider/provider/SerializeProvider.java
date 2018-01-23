@@ -1,6 +1,6 @@
 package de.hsnr.osm2018.provider.provider;
 
-import de.hsnr.osm2018.data.data.FilteredDataProvider;
+import de.hsnr.osm2018.data.provider.FilteredDataProvider;
 import de.hsnr.osm2018.data.graph.Graph;
 
 import java.io.*;
