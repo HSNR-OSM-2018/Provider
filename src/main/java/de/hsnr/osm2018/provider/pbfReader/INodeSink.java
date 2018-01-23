@@ -6,7 +6,7 @@ import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface MySink extends Sink {
+public interface INodeSink extends Sink {
 
     public Map<Long, Node> getNodes();
 
