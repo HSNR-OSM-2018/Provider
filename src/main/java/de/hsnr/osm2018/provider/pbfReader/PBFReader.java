@@ -12,9 +12,9 @@ public class PBFReader {
     private static final Logger LOGGER = Logger.getLogger(PBFReader.class.getSimpleName());
 
     private OsmosisReader osmosisReader;
-    private MySink sink;
+    private INodeSink sink;
 
-    public PBFReader(String filename, MySink sink) {
+    public PBFReader(String filename, INodeSink sink) {
         File pbfFile;
         FileInputStream pbfFileStream = null;
         try {
@@ -34,7 +34,7 @@ public class PBFReader {
         this.osmosisReader.run();
     }
 
-    public MySink getSink() {
+    public INodeSink getSink() {
         return this.sink;
     }
 
