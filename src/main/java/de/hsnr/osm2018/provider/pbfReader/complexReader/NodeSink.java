@@ -2,6 +2,7 @@ package de.hsnr.osm2018.provider.pbfReader.complexReader;
 
 import de.hsnr.osm2018.data.graph.Edge;
 import de.hsnr.osm2018.data.graph.EdgeType;
+import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.data.graph.Node;
 import de.hsnr.osm2018.data.utils.EdgeTypeUtils;
 import de.hsnr.osm2018.data.utils.OSMMaxSpeedUtils;
@@ -33,9 +34,17 @@ public class NodeSink implements INodeSink {
 
     private boolean processingWays;
     private boolean processingNodes;
+
     public NodeSink(Set<Long> relevantNodes) {
         this.relevantNodes = relevantNodes;
         this.nodes = new HashMap<>();
+        this.processingWays = false;
+        this.processingNodes = false;
+    }
+
+    public NodeSink(Set<Long> relevantNodes, Graph graph) {
+        this.relevantNodes = relevantNodes;
+        this.nodes = graph.getNodes();
         this.processingWays = false;
         this.processingNodes = false;
     }

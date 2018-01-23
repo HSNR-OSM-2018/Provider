@@ -3,13 +3,17 @@ package de.hsnr.osm2018.provider.provider;
 import de.hsnr.osm2018.data.data.FilteredDataProvider;
 import de.hsnr.osm2018.provider.pbfReader.PBFReader;
 import de.hsnr.osm2018.provider.pbfReader.PBFNodeSink;
+import de.hsnr.osm2018.provider.pbfReader.complexReader.ComplexPbfReader;
+import de.hsnr.osm2018.provider.pbfReader.complexReader.InitSink;
+import de.hsnr.osm2018.provider.pbfReader.complexReader.NodeSink;
 
 public class PbfProvider extends FilteredDataProvider {
 
     public PbfProvider(String fileName) {
         super();
-        PBFNodeSink sink = new PBFNodeSink(mGraph);
-        PBFReader reader = new PBFReader(fileName, sink);
+        //PBFNodeSink sink = new NodeSink(mGraph);
+        InitSink initsink = new InitSink();
+        ComplexPbfReader reader = new ComplexPbfReader(fileName, initsink, mGraph);
         reader.run();
     }
 }

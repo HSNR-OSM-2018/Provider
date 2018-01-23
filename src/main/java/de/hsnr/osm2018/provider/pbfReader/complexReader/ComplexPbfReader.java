@@ -1,6 +1,7 @@
 package de.hsnr.osm2018.provider.pbfReader.complexReader;
 
 import crosby.binary.osmosis.OsmosisReader;
+import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.provider.pbfReader.INodeSink;
 import de.hsnr.osm2018.provider.pbfReader.PBFReader;
 
@@ -18,8 +19,10 @@ public class ComplexPbfReader {
     private OsmosisReader osmosisMainReader;
     private IInitSink initSink;
     private NodeSink mainSink;
+    private Graph graph;
 
-    public ComplexPbfReader(String filename, IInitSink initSink) {
+    public ComplexPbfReader(String filename, IInitSink initSink, Graph graph) {
+        this.graph = graph;
         File pbfFile;
         FileInputStream pbfInitFileStream = null;
         FileInputStream pbfMainFileStream = null;
@@ -50,7 +53,7 @@ public class ComplexPbfReader {
     }
 
     private void runMainReader(Set<Long> relevantNodes) {
-        this.mainSink = new NodeSink(relevantNodes);
+        this.mainSink = new NodeSink(relevantNodes, this.graph);
         this.osmosisMainReader.setSink(this.mainSink);
         this.osmosisMainReader.run();
     }

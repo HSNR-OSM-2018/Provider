@@ -1,5 +1,6 @@
 package de.hsnr.osm2018.provider.pbfReader;
 
+import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.data.graph.Node;
 import de.hsnr.osm2018.provider.pbfReader.complexReader.ComplexPbfReader;
 import de.hsnr.osm2018.provider.pbfReader.complexReader.InitSink;
@@ -34,7 +35,7 @@ public class ComplexPbfReaderTest {
 
     private void executeReaderTest(String filename) throws InterruptedException {
         long t1 = System.currentTimeMillis();
-        ComplexPbfReader reader = new ComplexPbfReader(filename, new InitSink());
+        ComplexPbfReader reader = new ComplexPbfReader(filename, new InitSink(), new Graph());
         reader.run();
         long t2 = System.currentTimeMillis();
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
