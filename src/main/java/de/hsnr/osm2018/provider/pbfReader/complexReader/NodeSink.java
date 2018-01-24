@@ -75,6 +75,7 @@ public class NodeSink implements INodeSink {
             Node startNode = this.nodes.get(wayNodes.get(0).getNodeId());
             long endNodeId;
             Node endNode;
+            //Node tempNode;
             Edge currentEdge;
 
             if(startNode == null)
@@ -82,12 +83,18 @@ public class NodeSink implements INodeSink {
 
             Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") ||
                     tag.getKey().equals("length") || tag.getKey().equals("highway") || tag.getKey().equals("oneway") || tag.getKey().equals("junction")).collect(Collectors.toMap(t -> t.getKey(), t -> t));
+            double distance = 0D;
+
+            //tempNode = startNode;
             for(int i = 1; i < wayNodes.size(); i++) {
                 endNodeId = wayNodes.get(i).getNodeId();
+
+                //distance += endNode.getReadDistance(endNode);
+                //tempNode = endNode;
                 if(this.nodes.containsKey(endNodeId)){
                     endNode = this.nodes.get(endNodeId);
                     // TODO: Länge wird nun für Teilwege falsch sein
-                    currentEdge = new Edge(startNode, endNode, (int)startNode.getDistance(endNode), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : 0, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
+                    currentEdge = new Edge(startNode, endNode, (int)startNode.getReadDistance(endNode), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : 0, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
                     startNode.addEdge(currentEdge);
                     if (!tags.containsKey("oneway")) {
                         endNode.addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
@@ -95,6 +102,7 @@ public class NodeSink implements INodeSink {
                         endNode.addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
                     }
                     startNode = endNode;
+                    distance = 0D;
                 }
             }
         }
