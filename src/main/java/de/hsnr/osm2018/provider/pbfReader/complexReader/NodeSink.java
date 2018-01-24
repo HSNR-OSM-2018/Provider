@@ -73,16 +73,28 @@ public class NodeSink implements INodeSink {
         if (this.currentWay.getWayNodes().size() >= 2) {
             List<WayNode> wayNodes = this.currentWay.getWayNodes();
             Node startNode = this.nodes.get(wayNodes.get(0).getNodeId());
-            Node endNode = this.nodes.get(wayNodes.get(wayNodes.size() - 1).getNodeId());
-            if (startNode != null && endNode != null) {
-                Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") ||
-                        tag.getKey().equals("length") || tag.getKey().equals("highway") || tag.getKey().equals("oneway") || tag.getKey().equals("junction")).collect(Collectors.toMap(t -> t.getKey(), t -> t));
-                Edge currentEdge = new Edge(startNode, endNode, tags.containsKey("length") ? this.evaluateLength(tags.get("length"), wayNodes) : this.evaluateLength(wayNodes), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : 0, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
-                this.nodes.get(currentEdge.getStartNode().getId()).addEdge(currentEdge);
-                if (!tags.containsKey("oneway")) {
-                    this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
-                } else if (!tags.get("oneway").getValue().equals("yes")) {
-                    this.nodes.get(currentEdge.getDestinationNode().getId()).addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+            long endNodeId;
+            Node endNode;
+            Edge currentEdge;
+
+            if(startNode == null)
+                return;
+
+            Map<String, Tag> tags = this.currentWay.getTags().stream().filter(tag -> tag.getKey().equals("maxspeed") ||
+                    tag.getKey().equals("length") || tag.getKey().equals("highway") || tag.getKey().equals("oneway") || tag.getKey().equals("junction")).collect(Collectors.toMap(t -> t.getKey(), t -> t));
+            for(int i = 1; i < wayNodes.size(); i++) {
+                endNodeId = wayNodes.get(i).getNodeId();
+                if(this.nodes.containsKey(endNodeId)){
+                    endNode = this.nodes.get(endNodeId);
+                    // TODO: Länge wird nun für Teilwege falsch sein
+                    currentEdge = new Edge(startNode, endNode, tags.containsKey("length") ? this.evaluateLength(tags.get("length"), wayNodes) : this.evaluateLength(wayNodes), tags.containsKey("maxspeed") ? this.evaluateMaxSpeed(tags.get("maxspeed")) : 0, tags.containsKey("highway") ? EdgeTypeUtils.evaluateEdgeTypeByOSMTagName(tags.get("highway").getValue()) : EdgeType.UNKNOWN);
+                    startNode.addEdge(currentEdge);
+                    if (!tags.containsKey("oneway")) {
+                        endNode.addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+                    } else if (!tags.get("oneway").getValue().equals("yes")) {
+                        endNode.addEdge(currentEdge.getStartNode(), currentEdge.getLength(), currentEdge.getSpeed(), currentEdge.getType());
+                    }
+                    startNode = endNode;
                 }
             }
         }
