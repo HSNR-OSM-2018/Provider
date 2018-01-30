@@ -1,4 +1,4 @@
-package de.hsnr.osm2018.provider.pbfReader.complexReader;
+package de.hsnr.osm2018.provider.pbfReader.common;
 
 import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 import java.util.Set;

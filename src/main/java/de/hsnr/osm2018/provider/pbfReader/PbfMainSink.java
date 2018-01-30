@@ -6,6 +6,7 @@ import de.hsnr.osm2018.data.graph.Graph;
 import de.hsnr.osm2018.data.graph.Node;
 import de.hsnr.osm2018.data.utils.EdgeTypeUtils;
 import de.hsnr.osm2018.data.utils.OSMMaxSpeedUtils;
+import de.hsnr.osm2018.provider.pbfReader.common.IMainSink;
 import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer;
 import org.openstreetmap.osmosis.core.container.v0_6.NodeContainer;
 import org.openstreetmap.osmosis.core.container.v0_6.WayContainer;
@@ -17,11 +18,11 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class PBFNodeSink implements INodeSink {
+public class PbfMainSink implements IMainSink {
 
     private static int GCCOUNT = 500;
 
-    private static Logger LOGGER = Logger.getLogger(PBFNodeSink.class.getSimpleName());
+    private static Logger LOGGER = Logger.getLogger(PbfMainSink.class.getSimpleName());
     private Map<Long, Node> nodes;
 
     private org.openstreetmap.osmosis.core.domain.v0_6.Node currentOsmNode;
@@ -29,12 +30,12 @@ public class PBFNodeSink implements INodeSink {
 
     private int iteratorCount;
 
-    public PBFNodeSink() {
+    public PbfMainSink() {
         this.nodes = new HashMap<>();
         this.iteratorCount = 0;
     }
 
-    public PBFNodeSink(Graph graph) {
+    public PbfMainSink(Graph graph) {
         this.nodes = graph.getNodes();
         this.iteratorCount = 0;
     }

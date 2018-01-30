@@ -1,5 +1,6 @@
-package de.hsnr.osm2018.provider.pbfReader.complexReader;
+package de.hsnr.osm2018.provider.pbfReader.complexReader.sinks;
 
+import de.hsnr.osm2018.provider.pbfReader.common.IInitSink;
 import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer;
 import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 

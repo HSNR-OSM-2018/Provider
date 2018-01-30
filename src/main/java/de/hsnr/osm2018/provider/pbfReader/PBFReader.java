@@ -1,6 +1,7 @@
 package de.hsnr.osm2018.provider.pbfReader;
 
 import crosby.binary.osmosis.OsmosisReader;
+import de.hsnr.osm2018.provider.pbfReader.common.IMainSink;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,9 +13,9 @@ public class PBFReader {
     private static final Logger LOGGER = Logger.getLogger(PBFReader.class.getSimpleName());
 
     private OsmosisReader osmosisReader;
-    private INodeSink sink;
+    private IMainSink sink;
 
-    public PBFReader(String filename, INodeSink sink) {
+    public PBFReader(String filename, IMainSink sink) {
         File pbfFile;
         FileInputStream pbfFileStream = null;
         try {
@@ -34,7 +35,7 @@ public class PBFReader {
         this.osmosisReader.run();
     }
 
-    public INodeSink getSink() {
+    public IMainSink getSink() {
         return this.sink;
     }
 
