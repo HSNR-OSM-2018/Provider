@@ -4,13 +4,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import java.io.IOException;
 
+@Ignore
 public class PBFReaderTest {
 
+    @Ignore
     @Test
     public void pbfReaderTest() throws IOException, InterruptedException {
         System.out.println("Ddorf Import Test");
         long t1 = System.currentTimeMillis();
-        PBFReader reader = new PBFReader("ddorf.pbf", new PBFNodeSink());
+        PBFReader reader = new PBFReader("ddorf.pbf", new PbfMainSink());
         reader.run();
         long t2 = System.currentTimeMillis();
         System.out.println("Execution Time:" + ((t2-t1)/1000) + "seconds");
@@ -26,7 +28,7 @@ public class PBFReaderTest {
         System.out.println("Europa Import Test! This may take some time...");
         System.out.println("Ignore for installing.");
         long t1 = System.currentTimeMillis();
-        PBFReader reader = new PBFReader("europaFilter.pbf", new PBFNodeSink());
+        PBFReader reader = new PBFReader("europaFilter.pbf", new PbfMainSink());
         reader.run();
         long t2 = System.currentTimeMillis();
         System.out.println("Imported Nodes in Europe: " + reader.getSink().getNodes().size());
@@ -34,11 +36,12 @@ public class PBFReaderTest {
 
     }
 
+    @Ignore
     @Test
     public void miniPBFTest() throws IOException {
         System.out.println("Mini PBFTest: ");
         long t1 = System.currentTimeMillis();
-        PBFReader reader = new PBFReader("output.pbf", new PBFNodeSink());
+        PBFReader reader = new PBFReader("output.pbf", new PbfMainSink());
         System.out.println("Before: " + reader.getSink().getNodes().size());
         reader.run();
         long t2 = System.currentTimeMillis();
