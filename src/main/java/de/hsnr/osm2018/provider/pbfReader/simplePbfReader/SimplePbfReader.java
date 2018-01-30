@@ -49,6 +49,7 @@ public class SimplePbfReader {
         this.nodeReader.run();
         System.gc();
         this.wayReader.run();
+        System.gc();
     }
 
     public WaySink getWaySink() {
