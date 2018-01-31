@@ -23,7 +23,8 @@ public class SimplePbfReaderTest {
     }
 
     @Test
-    public void testSimplePbfReaderNRW() {
+    public void testSimplePbfReaderNRW() throws InterruptedException {
+        Thread.sleep(5000);
         this.executeTest("nrwNode.pbf", "nrwWay.pbf", false, false);
     }
 

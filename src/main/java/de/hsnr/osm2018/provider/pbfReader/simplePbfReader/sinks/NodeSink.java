@@ -50,7 +50,7 @@ public class NodeSink implements Sink {
     }
 
     private void processCurrentOsmNode() {
-        this.nodes.put(this.currentOsmNode.getId(), new Node(this.currentOsmNode.getId(), this.currentOsmNode.getLatitude(), this.currentOsmNode.getLongitude()));
+        this.nodes.put(this.currentOsmNode.getId(), new Node(this.currentOsmNode.getId(),this.currentOsmNode.getLatitude(), this.currentOsmNode.getLongitude()));
     }
 
     public Map<Long, Node> getNodes() {

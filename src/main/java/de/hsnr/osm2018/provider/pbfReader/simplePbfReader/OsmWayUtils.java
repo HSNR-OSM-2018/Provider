@@ -21,14 +21,10 @@ public class OsmWayUtils {
     }
 
     public static String retrieveTag(Way osmWay, String tag) {
-        List<Tag> list = new ArrayList<>();
         for (Tag t : osmWay.getTags()) {
             if (t.getKey().equals(tag)) {
-                list.add(t);
+                return t.getValue();
             }
-        }
-        if(list.size() > 0) {
-            return list.get(0).getValue();
         }
         return null;
     }
