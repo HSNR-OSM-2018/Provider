@@ -7,6 +7,8 @@ import de.hsnr.osm2018.provider.pbfReader.complexReader.ComplexPbfReader;
 import de.hsnr.osm2018.provider.pbfReader.complexReader.sinks.InitSink;
 import de.hsnr.osm2018.provider.pbfReader.simplePbfReader.SimplePbfReader;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class PbfProvider extends FilteredDataProvider {
@@ -20,8 +22,13 @@ public class PbfProvider extends FilteredDataProvider {
         mGraph = new Graph((HashMap<Long, Node>) reader.getMainSink().getNodes());
     }
 
-    public PbfProvider(String fileNameNode, String fileNameWay) {
+    public PbfProvider(String fileNameNode, String fileNameWay) throws FileNotFoundException {
         SimplePbfReader reader = new SimplePbfReader(fileNameNode, fileNameWay, mGraph);
+        reader.run();
+    }
+
+    public PbfProvider(File nodeFile, File wayFile) throws FileNotFoundException {
+        SimplePbfReader reader = new SimplePbfReader(nodeFile, wayFile, mGraph);
         reader.run();
     }
 }

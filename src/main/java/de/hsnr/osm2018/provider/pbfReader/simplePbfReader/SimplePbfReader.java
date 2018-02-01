@@ -18,13 +18,17 @@ public class SimplePbfReader {
     private NodeSink nodeSink;
     private WaySink waySink;
 
-    public SimplePbfReader(String nodeFilename, String wayFilename, Graph graph) {
+    public SimplePbfReader(String nodeFilename, String wayFilename, Graph graph) throws FileNotFoundException {
         File nodeFile = new File(this.getClass().getClassLoader().getResource(nodeFilename).getFile());
         File wayFile = new File(this.getClass().getClassLoader().getResource(wayFilename).getFile());
         initializeReader(nodeFile, wayFile, graph);
     }
 
-    private void initializeReader(File nodeFile, File wayFile, Graph graph) {
+    public SimplePbfReader(File nodeFile, File wayFile, Graph graph) throws FileNotFoundException {
+        initializeReader(nodeFile, wayFile, graph);
+    }
+
+    private void initializeReader(File nodeFile, File wayFile, Graph graph) throws FileNotFoundException {
         try {
             FileInputStream nodeFileInputStream = new FileInputStream(nodeFile);
             FileInputStream wayFileInputStream = new FileInputStream(wayFile);
@@ -42,6 +46,7 @@ public class SimplePbfReader {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             logger.severe("Error: File not Found. Detailed ErrorMessage:\n" + e.getMessage());
+            throw e;
         }
     }
 

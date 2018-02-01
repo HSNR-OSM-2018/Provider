@@ -5,6 +5,7 @@ import de.hsnr.osm2018.data.graph.Node;
 import de.hsnr.osm2018.provider.pbfReader.simplePbfReader.SimplePbfReader;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +34,12 @@ public class SimplePbfReaderTest {
         this.executeTest("GermanyNode.pbf", "GermanyWay.pbf", false, false);
     }
     private void executeTest(String nodeFilename, String wayFilename, boolean printOverpass, boolean printEdgeInfos) {
-        SimplePbfReader reader = new SimplePbfReader(nodeFilename, wayFilename, null);
+        SimplePbfReader reader;
+        try {
+            reader = new SimplePbfReader(nodeFilename, wayFilename, null);
+        } catch (FileNotFoundException ignored) {
+            return;
+        }
         long t1 = System.currentTimeMillis();
         reader.run();
         long t2 = System.currentTimeMillis();
